@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dao.StuDao">
+    <select id="selectAllStu" resultType="com.qfedu.entity.Stu">
+        select * from stu;
+    </select>
+    <select id="selectStuByName" resultType="com.qfedu.entity.Stu">
+        select * from stu where stu_name = #{stu_name};
+    </select>
+
+    <select id="selectStuByNameAndId" resultType="Stu">
+        select  * from stu where stu_name =#{stu_name} and stu_id = #{stu_id}
+    </select>
+
+    <delete id="delStuById" >
+        delete from stu where stu_id = #{stu_id}
+    </delete>
+    <select id="selectStuByLike" resultType="Stu">
+        select * from stu where stu_name like concat('%',#{stu_name},'%');
+    </select>
+    <select id="selectStuByPage" resultType="Stu">
+        select * from stu limit #{begin},#{pageSize}
+    </select>
+
+    <select id="selectStuByPageMap" resultType="Stu">
+        select * from stu limit #{begin},#{pageSize}
+    </select>
+
+
+    <resultMap id="stuGreade" type="com.qfedu.entity.Stu">
+        <id column="stu_id" property="stu_id"></id>
+        <result column="stu_name" property="stu_name"></result>
+        <!--<result column="stu_age" property="stu_age"></result>
+        <result column="stu_bir" property="stu_bir"></result>
+        <result column="stu_hobby" property="stu_hobby"></result>
+        <result column="greadeid" property="greadeid"></result>
+        <result column="stu_psw" property="stu_psw"></result>
+        <result column="imgPath" property="imgPath"></result>-->
+        <association property="greade" javaType="com.qfedu.entity.Greade">
+            <id column="gid" property="gid"></id>
+            <result column="g_name" property="g_name"></result>
+        </association>
+    </resultMap>
+    <select id="getStuAndGreade" resultMap="stuGreade">
+        select * from stu, greade where stu.greadeid = greade.gid and stu.stu_id = #{stu_id}
+    </select>
+
+    <resultMap id="stuCourse" type="Stu">
+        <id column="stu_id" property="stu_id"></id>
+        <collection property="courseList" ofType="com.qfedu.entity.Course">
+            <id column="cid" property="cid"></id>
+        </collection>
+    </resultMap>
+    <select id="getStuCourse" resultMap="stuCourse">
+        select * from stu inner join
+        stu_course
+        on
+        stu.stu_id = stu_course.sid
+        inner join course
+        on stu_course.cid = course.cid
+    </select>
+</mapper>

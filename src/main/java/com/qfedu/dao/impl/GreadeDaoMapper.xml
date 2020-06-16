@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dao.GreadeDao">
+
+    <resultMap id="greadeStu" type="Greade">
+        <id column="gid" property="gid"></id>
+        <collection property="stuList" ofType="Stu">
+            <id column="stu_id" property="stu_id"></id>
+        </collection>
+    </resultMap>
+    <select id="getGreadeAndStu" resultMap="greadeStu">
+        select * from stu, greade where stu.greadeid = greade.gid
+    </select>
+</mapper>

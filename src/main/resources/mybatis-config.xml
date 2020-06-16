@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="jdbc.properties" />
+
+
+    <settings>
+        <setting name="autoMappingBehavior" value="FULL"/>
+    </settings>
+
+
+    <typeAliases>
+        <!--自动扫描包，将原类名作为别名-->
+        <package name="com.qfedu.entity"/>
+    </typeAliases>
+    
+
+    <environments default="MySqlDB">
+        <environment id="MySqlDB">
+            <transactionManager type="JDBC">
+
+            </transactionManager>
+            <dataSource type="org.apache.ibatis.datasource.pooled.PooledDataSourceFactory">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="com\qfedu\dao\impl\StudaoMapper.xml"></mapper>
+        <mapper resource="com\qfedu\dao\impl\GreadeDaoMapper.xml"></mapper>
+
+    </mappers>
+</configuration>
